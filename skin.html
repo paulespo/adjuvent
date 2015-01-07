@@ -34,7 +34,29 @@
 				scene = new THREE.Scene();
 				
 				
-				// paste your code from the geometryGUI here
+				map = THREE.ImageUtils.loadTexture('../texturez/proxy.php?url=http://euchlora.files.wordpress.com/2013/03/dry-skin-canstockphoto2335282.jpg');
+				geometry = new THREE.CircleGeometry(169.65, 123, 126, 6.283185307179586);
+				material = new THREE.MeshBasicMaterial({shading: THREE.SmoothShading, color: 0xdcdcdc, map: map});
+				for ( var i = 0; i < geometry.vertices.length; i ++ ) {
+					var vertices = [];
+					for ( var v = 0; v < geometry.vertices.length; v ++ ) {
+						vertices.push( geometry.vertices[ v ].clone() );
+						if ( v === i ) {
+							vertices[ vertices.length - 1 ].x *= 2;
+							vertices[ vertices.length - 1 ].y *= 2;
+							vertices[ vertices.length - 1 ].z *= 2;
+						}
+					}
+					geometry.morphTargets.push( { name: "target" + i, vertices: vertices } );
+				}
+				mesh = new THREE.Mesh(geometry, material);
+				mesh.material.morphTargets = true;
+				map.wrapS = map.wrapT = THREE.RepeatWrapping;
+				map.repeat.set( 1, 1 );
+				mesh.castShadow = true;
+				scene.add(mesh);
+				renderer.shadowMapEnabled = true;
+
 
 
 			}
@@ -43,7 +65,7 @@
 
 				requestAnimationFrame( draw );
 				
-				// experiment with code from the snippets menu here
+				mesh.morphTargetInfluences[ 0 ] = Math.sin( Date.now() * 0.102 );
 
 				renderer.render( scene, camera );
 
