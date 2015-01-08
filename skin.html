@@ -14,6 +14,7 @@
 		
 		<script src="http://brangerbriz.net/labs/threejs_playGnd/js/three.min.js"></script>
 		<script src="http://brangerbriz.net/labs/threejs_playGnd/js/Detector.js"></script>
+		<script src="http://brangerbriz.net/labs/threejs_playGnd/js/ShaderToon.js"></script>
 		<script>
 
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
@@ -35,7 +36,7 @@
 				
 				
 				map = THREE.ImageUtils.loadTexture('../texturez/proxy.php?url=http://euchlora.files.wordpress.com/2013/03/dry-skin-canstockphoto2335282.jpg');
-				geometry = new THREE.CircleGeometry(169.65, 123, 126, 6.283185307179586);
+				geometry = new THREE.CircleGeometry(169.65, 50, 126, 6.283185307179586);
 				material = new THREE.MeshBasicMaterial({shading: THREE.SmoothShading, color: 0xdcdcdc, map: map});
 				for ( var i = 0; i < geometry.vertices.length; i ++ ) {
 					var vertices = [];
@@ -58,16 +59,19 @@
 				renderer.shadowMapEnabled = true;
 
 
-
 			}
 
+
+				 
 			function draw() {
 
 				requestAnimationFrame( draw );
 				
-				mesh.morphTargetInfluences[ 0 ] = Math.sin( Date.now() * 0.102 );
-
-				renderer.render( scene, camera );
+				mesh.rotation.x = Date.now() * 0.005;	
+				mesh.rotation.y = Date.now() * 0.0002;	
+				mesh.rotation.z = Date.now() * 0.001;
+        	
+				renderer.render( scene, camera  );
 
 			}
 
