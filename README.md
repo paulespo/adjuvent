@@ -1,3 +1,3 @@
 adjuvent
 ========
-A website for the adjuvent project
+A website for serving data to machines
